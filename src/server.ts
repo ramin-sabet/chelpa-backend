@@ -9,6 +9,7 @@ import * as logger from 'morgan';
 import * as path from 'path';
 // import PostRouter from './controllers/PostRouter';
 import EventController from './controller/EventController';
+import optionsController from './controller/optionsController';
 
 class Server {
 
@@ -20,11 +21,11 @@ class Server {
     this.config();
     this.routes();
   }
-  
+
   // application config
   public config(): void {
 
-    const MONGO_URI: string = 'mongodb://localhost/chelpa'; 
+    const MONGO_URI: string = 'mongodb://localhost/chelpa';
     mongoose.connect(MONGO_URI || process.env.MONGODB_URI);
 
     // express middleware
@@ -44,7 +45,7 @@ class Server {
       res.header('Access-Control-Allow-Credentials', 'true');
       next();
     });
-    
+
   }
 
   // application routes
@@ -52,7 +53,7 @@ class Server {
     const router: express.Router = express.Router();
 
     this.app.use('/', router);
-    // this.app.use('/api/v1/posts', PostRouter);
+    this.app.use('/api/v1/options', optionsController);
     this.app.use('/api/v1/events', EventController);
   }
 }

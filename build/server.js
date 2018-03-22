@@ -10,6 +10,7 @@ var mongoose = require("mongoose");
 var logger = require("morgan");
 // import PostRouter from './controllers/PostRouter';
 var EventController_1 = require("./controller/EventController");
+var optionsController_1 = require("./controller/optionsController");
 var Server = /** @class */ (function () {
     function Server() {
         this.app = express();
@@ -41,7 +42,7 @@ var Server = /** @class */ (function () {
     Server.prototype.routes = function () {
         var router = express.Router();
         this.app.use('/', router);
-        // this.app.use('/api/v1/posts', PostRouter);
+        this.app.use('/api/v1/options', optionsController_1.default);
         this.app.use('/api/v1/events', EventController_1.default);
     };
     return Server;

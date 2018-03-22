@@ -49,6 +49,6 @@ const EventSchema: Schema = new Schema({
 //     // type: Schema.Types.ObjectId,
 //     // ref: 'Post'
 //   }]
- });
+);
 
 export default model('Event', EventSchema);

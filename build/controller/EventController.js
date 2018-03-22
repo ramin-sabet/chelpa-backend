@@ -8,7 +8,7 @@ var EventController = /** @class */ (function () {
         this.routes();
     }
     EventController.prototype.all = function (req, res) {
-        Event_1.default.find({ "name": { "$regex": req.query.keyword, "$options": "i" } }, { name: 1, _id: 0 }).limit(parseInt(req.query.limit))
+        Event_1.default.find({ "name": { "$regex": req.query.keyword, "$options": "i" } }, { name: 1 }).limit(parseInt(req.query.limit))
             .then(function (data) {
             res.status(200).json({ data: data });
         })
@@ -16,16 +16,16 @@ var EventController = /** @class */ (function () {
             res.status(500).json({ error: error });
         });
     };
-    //   public one(req: Request, res: Response): void {
-    //     const username: string = req.params.username;
-    //     Event.findOne({ username })
-    //     .then((data) => {
-    //       res.status(200).json({ data });
-    //     })
-    //     .catch((error) => {
-    //       res.status(500).json({ error });
-    //     });
-    //   }
+    EventController.prototype.one = function (req, res) {
+        var _id = req.params._id;
+        Event_1.default.findOne({ _id: _id })
+            .then(function (data) {
+            res.status(200).json({ data: data });
+        })
+            .catch(function (error) {
+            res.status(500).json({ error: error });
+        });
+    };
     EventController.prototype.create = function (req, res) {
         var name = req.body.name;
         var time = req.body.time;
@@ -72,7 +72,7 @@ var EventController = /** @class */ (function () {
     // set up our routes
     EventController.prototype.routes = function () {
         this.router.get('/', this.all);
-        // this.router.get('/:username', this.one);
+        this.router.get('/:_id', this.one);
         this.router.post('/', this.create);
         // this.router.put('/:username', this.update);
         // this.router.delete('/:username', this.delete);

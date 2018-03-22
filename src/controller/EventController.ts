@@ -11,28 +11,28 @@ class EventController {
   }
 
   public all(req: Request, res: Response): void {
-    
-    Event.find({ "name": { "$regex": req.query.keyword, "$options": "i" } },{name :1 ,_id:0}).limit(parseInt(req.query.limit))
-    .then((data) => {
-      res.status(200).json({ data });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
-  
+
+    Event.find({ "name": { "$regex": req.query.keyword, "$options": "i" } }, { name: 1 }).limit(parseInt(req.query.limit))
+      .then((data) => {
+        res.status(200).json({ data });
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
+
   }
 
-//   public one(req: Request, res: Response): void {
-//     const username: string = req.params.username;
+  public one(req: Request, res: Response): void {
+    const _id: string = req.params._id;
 
-//     Event.findOne({ username })
-//     .then((data) => {
-//       res.status(200).json({ data });
-//     })
-//     .catch((error) => {
-//       res.status(500).json({ error });
-//     });
-//   }
+    Event.findOne({ _id })
+      .then((data) => {
+        res.status(200).json({ data });
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
+  }
 
   public create(req: Request, res: Response): void {
     const name: string = req.body.name;
@@ -40,7 +40,7 @@ class EventController {
     const price: string = req.body.price;
     const location: string = req.body.location;
     const capacity: string = req.body.capacity;
-    const properties : string = req.body.properties;
+    const properties: string = req.body.properties;
 
     const event = new Event({
       name,
@@ -52,45 +52,45 @@ class EventController {
     });
 
     event.save()
-    .then((data) => {
-      res.status(201).json({ data });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
+      .then((data) => {
+        res.status(201).json({ data });
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
 
   }
 
-//   public update(req: Request, res: Response): void {
-//     const username: string = req.params.username;
+  //   public update(req: Request, res: Response): void {
+  //     const username: string = req.params.username;
 
-//     User.findOneAndUpdate({ username }, req.body)
-//     .then((data) => {
-//       res.status(200).json({ data });
-//     })
-//     .catch((error) => {
-//       res.status(500).json({ error });
-//     });
+  //     User.findOneAndUpdate({ username }, req.body)
+  //     .then((data) => {
+  //       res.status(200).json({ data });
+  //     })
+  //     .catch((error) => {
+  //       res.status(500).json({ error });
+  //     });
 
-//   }
+  //   }
 
-//   public delete(req: Request, res: Response): void {
-//     const username: string = req.params.username;
+  //   public delete(req: Request, res: Response): void {
+  //     const username: string = req.params.username;
 
-//     User.findOneAndRemove({ username })
-//     .then(() => {
-//       res.status(204).end();
-//     })
-//     .catch((error) => {
-//       res.status(500).json({ error });
-//     });
+  //     User.findOneAndRemove({ username })
+  //     .then(() => {
+  //       res.status(204).end();
+  //     })
+  //     .catch((error) => {
+  //       res.status(500).json({ error });
+  //     });
 
-//   }
+  //   }
 
   // set up our routes
   public routes() {
     this.router.get('/', this.all);
-    // this.router.get('/:username', this.one);
+    this.router.get('/:_id', this.one);
     this.router.post('/', this.create);
     // this.router.put('/:username', this.update);
     // this.router.delete('/:username', this.delete);

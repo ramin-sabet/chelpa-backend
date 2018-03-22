@@ -40,7 +40,13 @@ var EventSchema = new mongoose_1.Schema({
         required: true
     },
     properties: [mongoose_1.Schema.Types.Mixed]
-});
-;
+}
+//   [{
+//       type: String,
+//       default: ''
+//     // type: Schema.Types.ObjectId,
+//     // ref: 'Post'
+//   }]
+);
 exports.default = mongoose_1.model('Event', EventSchema);
 //# sourceMappingURL=Event.js.map
