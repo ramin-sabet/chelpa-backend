@@ -8,9 +8,43 @@ var express = require("express");
 var helmet = require("helmet");
 var mongoose = require("mongoose");
 var logger = require("morgan");
+var admin = require("firebase-admin");
 // import PostRouter from './controllers/PostRouter';
 var EventController_1 = require("./controller/EventController");
 var optionsController_1 = require("./controller/optionsController");
+var serviceAccount = require("../chelpa-sms-verification-firebase-adminsdk-whx5g-839fd5c1ae.json");
+var firebaseAdmin = admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://chelpa-sms-verification.firebaseio.com"
+});
+var validateFirebaseIdToken = function (req, res, next) {
+    console.log('Check if request is authorized with Firebase ID token');
+    if ((!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) &&
+        !req.cookies.__session) {
+        console.error('No Firebase ID token was passed as a Bearer token in the Authorization header.', 'Make sure you authorize your request by providing the following HTTP header:', 'Authorization: Bearer <Firebase ID Token>', 'or by passing a "__session" cookie.');
+        res.status(403).send('Unauthorized');
+        return;
+    }
+    var idToken;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+        console.log('Found "Authorization" header');
+        // Read the ID Token from the Authorization header.
+        idToken = req.headers.authorization.split('Bearer ')[1];
+    }
+    else {
+        console.log('Found "__session" cookie');
+        // Read the ID Token from cookie.
+        idToken = req.cookies.__session;
+    }
+    admin.auth().verifyIdToken(idToken).then(function (decodedIdToken) {
+        console.log('ID Token correctly decoded', decodedIdToken);
+        req.user = decodedIdToken;
+        next();
+    }).catch(function (error) {
+        console.error('Error while verifying Firebase ID token:', error);
+        res.status(403).send('Unauthorized');
+    });
+};
 var Server = /** @class */ (function () {
     function Server() {
         this.app = express();
@@ -41,6 +75,7 @@ var Server = /** @class */ (function () {
     // application routes
     Server.prototype.routes = function () {
         var router = express.Router();
+        this.app.use(validateFirebaseIdToken);
         this.app.use('/', router);
         this.app.use('/api/v1/options', optionsController_1.default);
         this.app.use('/api/v1/events', EventController_1.default);
