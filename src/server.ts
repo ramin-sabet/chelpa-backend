@@ -7,6 +7,7 @@ import * as helmet from 'helmet';
 import * as mongoose from 'mongoose';
 import * as logger from 'morgan';
 import * as path from 'path';
+import * as admin from 'firebase-admin';
 // import PostRouter from './controllers/PostRouter';
 import EventController from './controller/EventController';
 import optionsController from './controller/optionsController';
@@ -21,6 +22,8 @@ class Server {
     this.config();
     this.routes();
   }
+
+
 
   // application config
   public config(): void {
