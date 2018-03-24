@@ -41,14 +41,6 @@ const EventSchema: Schema = new Schema({
     required: true
   },
   properties:[Schema.Types.Mixed]}
-  
-  
-//   [{
-//       type: String,
-//       default: ''
-//     // type: Schema.Types.ObjectId,
-//     // ref: 'Post'
-//   }]
 );
 
 export default model('Event', EventSchema);

@@ -1,8 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose_1 = require("mongoose");
+import { model, Schema } from 'mongoose';
+
 // tslint:disable object-literal-sort-keys
-var EventSchema = new mongoose_1.Schema({
+const UserSchema: Schema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
@@ -14,7 +13,12 @@ var EventSchema = new mongoose_1.Schema({
     creatorId: {
         type: Number
     },
-    name: {
+    from: {
+        type: String,
+        default: '',
+        required: true
+    },
+    to: {
         type: String,
         default: '',
         required: true
@@ -22,24 +26,23 @@ var EventSchema = new mongoose_1.Schema({
     time: {
         type: String,
         default: '',
-        required: true
-    },
-    price: {
-        type: Number,
-        default: '',
         required: true,
+        // unique: true,
+        // lowercase: true
     },
-    location: {
+    guestNumbers: {
         type: String,
         default: '',
         required: true
     },
-    capacity: {
+    costs: {
         type: Number,
         default: '',
         required: true
     },
-    properties: [mongoose_1.Schema.Types.Mixed]
-});
-exports.default = mongoose_1.model('Event', EventSchema);
-//# sourceMappingURL=Event.js.map
+    items: [Schema.Types.Mixed]
+}
+
+);
+
+export default model('User', UserSchema);

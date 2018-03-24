@@ -9,7 +9,7 @@ var helmet = require("helmet");
 var mongoose = require("mongoose");
 var logger = require("morgan");
 var admin = require("firebase-admin");
-// import PostRouter from './controllers/PostRouter';
+var RiderController_1 = require("./controller/RiderController");
 var EventController_1 = require("./controller/EventController");
 var optionsController_1 = require("./controller/optionsController");
 var serviceAccount = require("../chelpa-sms-verification-firebase-adminsdk-whx5g-839fd5c1ae.json");
@@ -79,6 +79,7 @@ var Server = /** @class */ (function () {
         this.app.use('/', router);
         this.app.use('/api/v1/options', optionsController_1.default);
         this.app.use('/api/v1/events', EventController_1.default);
+        this.app.use('/api/v1/riders', RiderController_1.default);
     };
     return Server;
 }());

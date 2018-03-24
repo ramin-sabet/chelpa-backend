@@ -8,7 +8,7 @@ import * as mongoose from 'mongoose';
 import * as logger from 'morgan';
 import * as path from 'path';
 import * as admin from 'firebase-admin';
-// import PostRouter from './controllers/PostRouter';
+import RiderController from './controller/RiderController';
 import EventController from './controller/EventController';
 import optionsController from './controller/optionsController';
 
@@ -98,6 +98,7 @@ class Server {
     this.app.use('/', router);
     this.app.use('/api/v1/options', optionsController);
     this.app.use('/api/v1/events', EventController);
+    this.app.use('/api/v1/riders', RiderController);
   }
 }
 
