@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
 
 // tslint:disable object-literal-sort-keys
-const UserSchema: Schema = new Schema({
+const RideSchema: Schema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
@@ -45,4 +45,4 @@ const UserSchema: Schema = new Schema({
 
 );
 
-export default model('User', UserSchema);
+export default model('Ride', RideSchema);

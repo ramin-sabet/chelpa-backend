@@ -9,7 +9,7 @@ var helmet = require("helmet");
 var mongoose = require("mongoose");
 var logger = require("morgan");
 var admin = require("firebase-admin");
-var RiderController_1 = require("./controller/RiderController");
+// import RiderController from './controller/RiderController';
 var EventController_1 = require("./controller/EventController");
 var optionsController_1 = require("./controller/optionsController");
 var serviceAccount = require("../chelpa-sms-verification-firebase-adminsdk-whx5g-839fd5c1ae.json");
@@ -75,11 +75,11 @@ var Server = /** @class */ (function () {
     // application routes
     Server.prototype.routes = function () {
         var router = express.Router();
-        this.app.use(validateFirebaseIdToken);
+        // this.app.use(validateFirebaseIdToken);
         this.app.use('/', router);
         this.app.use('/api/v1/options', optionsController_1.default);
         this.app.use('/api/v1/events', EventController_1.default);
-        this.app.use('/api/v1/riders', RiderController_1.default);
+        //  this.app.use('/api/v1/riders', RiderController);
     };
     return Server;
 }());

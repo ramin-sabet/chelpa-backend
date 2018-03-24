@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
-import Rider from '../models/Rider';
+import Ride from '../models/Ride';
 
-class RiderController {
+class RideController {
 
   public router: Router;
 
@@ -42,7 +42,7 @@ class RiderController {
     const costs: Number = req.body.costs;
     const items: string = req.body.items;
 
-    const rider = new Rider({
+    const ride = new Ride({
       from,
       to,
       time,
@@ -51,7 +51,7 @@ class RiderController {
       items
     });
 
-    rider.save()
+    ride.save()
       .then((data) => {
         res.status(201).json({ data });
       })
@@ -62,7 +62,7 @@ class RiderController {
   }
 
   //   public update(req: Request, res: Response): void {
-  //     const username: string = req.params.usernrider
+  //     const username: string = req.params.usernRide
   //     User.findOneAndUpdate({ username }, req.body)
   //     .then((data) => {
   //       res.status(200).json({ data });
@@ -97,7 +97,7 @@ class RiderController {
 
 }
 
-const riderController = new RiderController();
-riderController.routes();
+const rideController = new RideController();
+rideController.routes();
 
-export default riderController.router;
+export default rideController.router;

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
-var Rider_1 = require("../models/Rider");
-var RiderController = /** @class */ (function () {
-    function RiderController() {
+var Ride_1 = require("../models/Ride");
+var RideController = /** @class */ (function () {
+    function RideController() {
         this.router = express_1.Router();
         this.routes();
     }
@@ -26,14 +26,14 @@ var RiderController = /** @class */ (function () {
     //         res.status(500).json({ error });
     //       });
     //   }
-    RiderController.prototype.create = function (req, res) {
+    RideController.prototype.create = function (req, res) {
         var from = req.body.From;
         var to = req.body.To;
         var time = req.body.time;
         var guestNumbers = req.body.guestNumbers;
         var costs = req.body.costs;
         var items = req.body.items;
-        var rider = new Rider_1.default({
+        var ride = new Ride_1.default({
             from: from,
             to: to,
             time: time,
@@ -41,7 +41,7 @@ var RiderController = /** @class */ (function () {
             costs: costs,
             items: items
         });
-        rider.save()
+        ride.save()
             .then(function (data) {
             res.status(201).json({ data: data });
         })
@@ -50,7 +50,7 @@ var RiderController = /** @class */ (function () {
         });
     };
     //   public update(req: Request, res: Response): void {
-    //     const username: string = req.params.usernrider
+    //     const username: string = req.params.usernRide
     //     User.findOneAndUpdate({ username }, req.body)
     //     .then((data) => {
     //       res.status(200).json({ data });
@@ -70,16 +70,16 @@ var RiderController = /** @class */ (function () {
     //     });
     //   }
     // set up our routes
-    RiderController.prototype.routes = function () {
+    RideController.prototype.routes = function () {
         // this.router.get('/', this.all);
         // this.router.get('/:_id', this.one);
         this.router.post('/', this.create);
         // this.router.put('/:username', this.update);
         // this.router.delete('/:username', this.delete);
     };
-    return RiderController;
+    return RideController;
 }());
-var riderController = new RiderController();
-riderController.routes();
-exports.default = riderController.router;
+var rideController = new RideController();
+rideController.routes();
+exports.default = rideController.router;
 //# sourceMappingURL=RiderController.js.map

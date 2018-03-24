@@ -61,18 +61,29 @@ class EventController {
 
   }
 
-  //   public update(req: Request, res: Response): void {
-  //     const username: string = req.params.username;
+  public update(req: Request, res: Response): void {
+    const _id: string = req.params._id;
 
-  //     User.findOneAndUpdate({ username }, req.body)
-  //     .then((data) => {
-  //       res.status(200).json({ data });
-  //     })
-  //     .catch((error) => {
-  //       res.status(500).json({ error });
-  //     });
+    Event.findOneAndUpdate({ _id }, {
+      $push: {
+        rides: {
+          from: req.body.From,
+          to: req.body.To,
+          time: req.body.time,
+          guestNumbers: req.body.guestNumbers,
+          costs: req.body.costs,
+          items: req.body.items,
+        }
+      }
+    })
+      .then((data) => {
+        res.status(200).json({ data });
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
 
-  //   }
+  }
 
   //   public delete(req: Request, res: Response): void {
   //     const username: string = req.params.username;
@@ -92,7 +103,7 @@ class EventController {
     this.router.get('/', this.all);
     this.router.get('/:_id', this.one);
     this.router.post('/', this.create);
-    // this.router.put('/:username', this.update);
+    this.router.put('/:_id', this.update);
     // this.router.delete('/:username', this.delete);
   }
 

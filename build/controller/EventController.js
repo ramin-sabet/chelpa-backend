@@ -49,16 +49,27 @@ var EventController = /** @class */ (function () {
             res.status(500).json({ error: error });
         });
     };
-    //   public update(req: Request, res: Response): void {
-    //     const username: string = req.params.username;
-    //     User.findOneAndUpdate({ username }, req.body)
-    //     .then((data) => {
-    //       res.status(200).json({ data });
-    //     })
-    //     .catch((error) => {
-    //       res.status(500).json({ error });
-    //     });
-    //   }
+    EventController.prototype.update = function (req, res) {
+        var _id = req.params._id;
+        Event_1.default.findOneAndUpdate({ _id: _id }, {
+            $push: {
+                rides: {
+                    from: req.body.From,
+                    to: req.body.To,
+                    time: req.body.time,
+                    guestNumbers: req.body.guestNumbers,
+                    costs: req.body.costs,
+                    items: req.body.items,
+                }
+            }
+        })
+            .then(function (data) {
+            res.status(200).json({ data: data });
+        })
+            .catch(function (error) {
+            res.status(500).json({ error: error });
+        });
+    };
     //   public delete(req: Request, res: Response): void {
     //     const username: string = req.params.username;
     //     User.findOneAndRemove({ username })
@@ -74,7 +85,7 @@ var EventController = /** @class */ (function () {
         this.router.get('/', this.all);
         this.router.get('/:_id', this.one);
         this.router.post('/', this.create);
-        // this.router.put('/:username', this.update);
+        this.router.put('/:_id', this.update);
         // this.router.delete('/:username', this.delete);
     };
     return EventController;
