@@ -41,4 +41,4 @@ var OptionController = /** @class */ (function () {
 var optionController = new OptionController();
 optionController.routes();
 exports.default = optionController.router;
-//# sourceMappingURL=optionsController.js.map
+//# sourceMappingURL=OptionsController.js.map

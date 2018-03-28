@@ -9,9 +9,9 @@ var helmet = require("helmet");
 var mongoose = require("mongoose");
 var logger = require("morgan");
 var admin = require("firebase-admin");
-// import RiderController from './controller/RiderController';
+var UserController_1 = require("./controller/UserController");
 var EventController_1 = require("./controller/EventController");
-var optionsController_1 = require("./controller/optionsController");
+var OptionsController_1 = require("./controller/OptionsController");
 var serviceAccount = require("../chelpa-sms-verification-firebase-adminsdk-whx5g-839fd5c1ae.json");
 var firebaseAdmin = admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -75,10 +75,11 @@ var Server = /** @class */ (function () {
     // application routes
     Server.prototype.routes = function () {
         var router = express.Router();
-        // this.app.use(validateFirebaseIdToken);
+        this.app.use(validateFirebaseIdToken);
         this.app.use('/', router);
-        this.app.use('/api/v1/options', optionsController_1.default);
+        this.app.use('/api/v1/options', OptionsController_1.default);
         this.app.use('/api/v1/events', EventController_1.default);
+        this.app.use('/api/v1/users', UserController_1.default);
         //  this.app.use('/api/v1/riders', RiderController);
     };
     return Server;

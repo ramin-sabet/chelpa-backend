@@ -8,9 +8,9 @@ import * as mongoose from 'mongoose';
 import * as logger from 'morgan';
 import * as path from 'path';
 import * as admin from 'firebase-admin';
-// import RiderController from './controller/RiderController';
+import UserController from './controller/UserController';
 import EventController from './controller/EventController';
-import optionsController from './controller/optionsController';
+import OptionsController from './controller/OptionsController';
 
 let serviceAccount = require("../chelpa-sms-verification-firebase-adminsdk-whx5g-839fd5c1ae.json");
 
@@ -94,11 +94,12 @@ class Server {
   // application routes
   public routes(): void {
     const router: express.Router = express.Router();
-   // this.app.use(validateFirebaseIdToken);
+    this.app.use(validateFirebaseIdToken);
     this.app.use('/', router);
-    this.app.use('/api/v1/options', optionsController);
+    this.app.use('/api/v1/options', OptionsController);
     this.app.use('/api/v1/events', EventController);
- //  this.app.use('/api/v1/riders', RiderController);
+    this.app.use('/api/v1/users', UserController);
+    //  this.app.use('/api/v1/riders', RiderController);
   }
 }
 
