@@ -34,6 +34,18 @@ class EventController {
       });
   }
 
+  public allRides(req: Request, res: Response): void {
+    const _id: string = req.params._id;
+
+    Event.findOne({ _id }, {rides: 1, _id:0})
+      .then((data) => {
+        res.status(200).json({ data });
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
+  }
+
   public create(req: Request, res: Response): void {
     const name: string = req.body.name;
     const time: string = req.body.time;
@@ -102,6 +114,7 @@ class EventController {
   public routes() {
     this.router.get('/', this.all);
     this.router.get('/:_id', this.one);
+    this.router.get('/rides/:_id', this.allRides)
     this.router.post('/', this.create);
     this.router.put('/:_id', this.update);
     // this.router.delete('/:username', this.delete);

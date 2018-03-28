@@ -26,6 +26,16 @@ var EventController = /** @class */ (function () {
             res.status(500).json({ error: error });
         });
     };
+    EventController.prototype.allRides = function (req, res) {
+        var _id = req.params._id;
+        Event_1.default.findOne({ _id: _id }, { rides: 1, _id: 0 })
+            .then(function (data) {
+            res.status(200).json({ data: data });
+        })
+            .catch(function (error) {
+            res.status(500).json({ error: error });
+        });
+    };
     EventController.prototype.create = function (req, res) {
         var name = req.body.name;
         var time = req.body.time;
@@ -84,6 +94,7 @@ var EventController = /** @class */ (function () {
     EventController.prototype.routes = function () {
         this.router.get('/', this.all);
         this.router.get('/:_id', this.one);
+        this.router.get('/rides/:_id', this.allRides);
         this.router.post('/', this.create);
         this.router.put('/:_id', this.update);
         // this.router.delete('/:username', this.delete);

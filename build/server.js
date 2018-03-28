@@ -75,7 +75,7 @@ var Server = /** @class */ (function () {
     // application routes
     Server.prototype.routes = function () {
         var router = express.Router();
-        this.app.use(validateFirebaseIdToken);
+        //this.app.use(validateFirebaseIdToken);
         this.app.use('/', router);
         this.app.use('/api/v1/options', OptionsController_1.default);
         this.app.use('/api/v1/events', EventController_1.default);
