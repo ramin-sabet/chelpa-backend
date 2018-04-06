@@ -13,12 +13,14 @@ class UserController {
     public create(req: Request, res: Response): void {
         
         const userId: string = req.body.userId;
-        const username: string = req.body.username;
+        const userName: string = req.body.userName;
+        const phoneNumber: Number = req.body.phoneNumber;
 
 
         const user = new User({
             userId,
-            username
+            userName,
+            phoneNumber
         });
 
         user.save()

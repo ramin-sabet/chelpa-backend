@@ -94,7 +94,7 @@ class Server {
   // application routes
   public routes(): void {
     const router: express.Router = express.Router();
-    //this.app.use(validateFirebaseIdToken);
+    this.app.use(validateFirebaseIdToken);
     this.app.use('/', router);
     this.app.use('/api/v1/options', OptionsController);
     this.app.use('/api/v1/events', EventController);

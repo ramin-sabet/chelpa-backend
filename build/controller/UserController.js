@@ -9,10 +9,12 @@ var UserController = /** @class */ (function () {
     }
     UserController.prototype.create = function (req, res) {
         var userId = req.body.userId;
-        var username = req.body.username;
+        var userName = req.body.userName;
+        var phoneNumber = req.body.phoneNumber;
         var user = new User_1.default({
             userId: userId,
-            username: username
+            userName: userName,
+            phoneNumber: phoneNumber
         });
         user.save()
             .then(function (data) {

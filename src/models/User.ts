@@ -11,12 +11,19 @@ const UserSchema: Schema = new Schema({
         type: String,
         // unique: true
     },
-    username: {
+    userName: {
+        type: String,
+        default: '',
+        required: true,
+        // unique: true
+    },
+    phoneNumber: {
         type: String,
         default: '',
         required: true,
         // unique: true
     }
+
 });
 
 export default model('User', UserSchema);
