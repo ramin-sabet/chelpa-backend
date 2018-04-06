@@ -3,6 +3,7 @@ import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as express from 'express';
+import * as multer from 'multer';
 import * as helmet from 'helmet';
 import * as mongoose from 'mongoose';
 import * as logger from 'morgan';
@@ -11,6 +12,19 @@ import * as admin from 'firebase-admin';
 import UserController from './controller/UserController';
 import EventController from './controller/EventController';
 import OptionsController from './controller/OptionsController';
+
+export let UPLOAD_PATH = "uploads";
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb){
+    cb(null, UPLOAD_PATH);
+  },
+  filename: function(req, file, cb){
+    cb(null, file.fieldname + '-' + Date.now());
+  }
+})
+
+export let upload = multer({storage: storage});
 
 let serviceAccount = require("../chelpa-sms-verification-firebase-adminsdk-whx5g-839fd5c1ae.json");
 
@@ -69,7 +83,13 @@ class Server {
   public config(): void {
 
     const MONGO_URI: string = 'mongodb://localhost/chelpa';
-    mongoose.connect(MONGO_URI || process.env.MONGODB_URI);
+    mongoose.connect(MONGO_URI || process.env.MONGODB_URI, (err)=>{
+      if(err){
+        console.log(err);
+      }else{
+        console.log('Connected to MongoDB');
+      }
+    });
 
     // express middleware
     this.app.use(bodyParser.urlencoded({ extended: true }));
@@ -94,7 +114,7 @@ class Server {
   // application routes
   public routes(): void {
     const router: express.Router = express.Router();
-    this.app.use(validateFirebaseIdToken);
+   // this.app.use(validateFirebaseIdToken);
     this.app.use('/', router);
     this.app.use('/api/v1/options', OptionsController);
     this.app.use('/api/v1/events', EventController);

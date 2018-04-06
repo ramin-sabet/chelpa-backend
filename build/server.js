@@ -5,6 +5,7 @@ var compression = require("compression");
 var cookieParser = require("cookie-parser");
 var cors = require("cors");
 var express = require("express");
+var multer = require("multer");
 var helmet = require("helmet");
 var mongoose = require("mongoose");
 var logger = require("morgan");
@@ -12,6 +13,16 @@ var admin = require("firebase-admin");
 var UserController_1 = require("./controller/UserController");
 var EventController_1 = require("./controller/EventController");
 var OptionsController_1 = require("./controller/OptionsController");
+exports.UPLOAD_PATH = "uploads";
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, exports.UPLOAD_PATH);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now());
+    }
+});
+exports.upload = multer({ storage: storage });
 var serviceAccount = require("../chelpa-sms-verification-firebase-adminsdk-whx5g-839fd5c1ae.json");
 var firebaseAdmin = admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -54,7 +65,14 @@ var Server = /** @class */ (function () {
     // application config
     Server.prototype.config = function () {
         var MONGO_URI = 'mongodb://localhost/chelpa';
-        mongoose.connect(MONGO_URI || process.env.MONGODB_URI);
+        mongoose.connect(MONGO_URI || process.env.MONGODB_URI, function (err) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log('Connected to MongoDB');
+            }
+        });
         // express middleware
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(bodyParser.json());
@@ -75,7 +93,7 @@ var Server = /** @class */ (function () {
     // application routes
     Server.prototype.routes = function () {
         var router = express.Router();
-        this.app.use(validateFirebaseIdToken);
+        // this.app.use(validateFirebaseIdToken);
         this.app.use('/', router);
         this.app.use('/api/v1/options', OptionsController_1.default);
         this.app.use('/api/v1/events', EventController_1.default);
