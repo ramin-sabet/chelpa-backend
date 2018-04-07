@@ -47,6 +47,7 @@ class EventController {
   }
 
   public create(req: Request, res: Response): void {
+    const creatorId: string = req.body.creatorId;
     const name: string = req.body.name;
     const time: string = req.body.time;
     const price: string = req.body.price;
@@ -55,6 +56,7 @@ class EventController {
     const properties: string = req.body.properties;
 
     const event = new Event({
+      creatorId,
       name,
       time,
       price,
@@ -79,6 +81,7 @@ class EventController {
     Event.findOneAndUpdate({ _id }, {
       $push: {
         rides: {
+          creatorId: req.body.creatorId,
           from: req.body.From,
           to: req.body.To,
           time: req.body.time,

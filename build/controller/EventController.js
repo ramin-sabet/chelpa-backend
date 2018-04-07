@@ -37,6 +37,7 @@ var EventController = /** @class */ (function () {
         });
     };
     EventController.prototype.create = function (req, res) {
+        var creatorId = req.body.creatorId;
         var name = req.body.name;
         var time = req.body.time;
         var price = req.body.price;
@@ -44,6 +45,7 @@ var EventController = /** @class */ (function () {
         var capacity = req.body.capacity;
         var properties = req.body.properties;
         var event = new Event_1.default({
+            creatorId: creatorId,
             name: name,
             time: time,
             price: price,
@@ -64,6 +66,7 @@ var EventController = /** @class */ (function () {
         Event_1.default.findOneAndUpdate({ _id: _id }, {
             $push: {
                 rides: {
+                    creatorId: req.body.creatorId,
                     from: req.body.From,
                     to: req.body.To,
                     time: req.body.time,

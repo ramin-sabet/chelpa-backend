@@ -12,7 +12,8 @@ var EventSchema = new mongoose_1.Schema({
         default: Date.now
     },
     creatorId: {
-        type: Number
+        type: String,
+        required: true
     },
     name: {
         type: String,
@@ -50,7 +51,8 @@ var EventSchema = new mongoose_1.Schema({
                 default: Date.now
             },
             creatorId: {
-                type: Number
+                type: String,
+                required: true
             },
             from: {
                 type: String,

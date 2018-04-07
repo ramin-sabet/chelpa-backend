@@ -11,7 +11,8 @@ const EventSchema: Schema = new Schema({
     default: Date.now
   },
   creatorId: {
-    type: Number
+    type: String,
+    required: true
   },
   name: {
     type: String,
@@ -52,7 +53,8 @@ const EventSchema: Schema = new Schema({
       default: Date.now
     },
     creatorId: {
-      type: Number
+      type: String,
+      required: true
     },
     from: {
       type: String,
