@@ -79,7 +79,23 @@ var EventSchema = new mongoose_1.Schema({
                 default: '',
                 required: true
             },
-            items: [mongoose_1.Schema.Types.Mixed]
+            items: [mongoose_1.Schema.Types.Mixed],
+            peopleJoined: [{
+                    createdAt: {
+                        type: Date,
+                        default: Date.now
+                    },
+                    userId: {
+                        type: String,
+                        default: Date.now,
+                        required: true
+                    },
+                    rideId: {
+                        type: String,
+                        default: Date.now,
+                        required: true
+                    }
+                }]
         }]
 });
 exports.default = mongoose_1.model('Event', EventSchema);

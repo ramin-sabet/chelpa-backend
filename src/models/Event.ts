@@ -83,7 +83,23 @@ const EventSchema: Schema = new Schema({
       default: '',
       required: true
     },
-    items: [Schema.Types.Mixed]
+    items: [Schema.Types.Mixed],
+    peopleJoined: [{
+      createdAt: {
+        type: Date,
+        default: Date.now
+      },
+      userId: {
+        type: String,
+        default: Date.now,
+        required: true
+      },
+      rideId: {
+        type: String,
+        default: Date.now,
+        required: true
+      }
+    }]
   }]
 });
 

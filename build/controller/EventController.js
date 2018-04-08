@@ -7,7 +7,7 @@ var EventController = /** @class */ (function () {
         this.router = express_1.Router();
         this.routes();
     }
-    EventController.prototype.all = function (req, res) {
+    EventController.prototype.allEvents = function (req, res) {
         Event_1.default.find({ "name": { "$regex": req.query.keyword, "$options": "i" } }, { name: 1 }).limit(parseInt(req.query.limit))
             .then(function (data) {
             res.status(200).json({ data: data });
@@ -16,7 +16,7 @@ var EventController = /** @class */ (function () {
             res.status(500).json({ error: error });
         });
     };
-    EventController.prototype.one = function (req, res) {
+    EventController.prototype.oneEvent = function (req, res) {
         var _id = req.params._id;
         Event_1.default.findOne({ _id: _id })
             .then(function (data) {
@@ -36,7 +36,7 @@ var EventController = /** @class */ (function () {
             res.status(500).json({ error: error });
         });
     };
-    EventController.prototype.create = function (req, res) {
+    EventController.prototype.createEvent = function (req, res) {
         var creatorId = req.body.creatorId;
         var name = req.body.name;
         var time = req.body.time;
@@ -61,7 +61,7 @@ var EventController = /** @class */ (function () {
             res.status(500).json({ error: error });
         });
     };
-    EventController.prototype.update = function (req, res) {
+    EventController.prototype.updateRides = function (req, res) {
         var _id = req.params._id;
         Event_1.default.findOneAndUpdate({ _id: _id }, {
             $push: {
@@ -73,6 +73,24 @@ var EventController = /** @class */ (function () {
                     guestNumbers: req.body.guestNumbers,
                     costs: req.body.costs,
                     items: req.body.items,
+                }
+            }
+        })
+            .then(function (data) {
+            res.status(200).json({ data: data });
+        })
+            .catch(function (error) {
+            res.status(500).json({ error: error });
+        });
+    };
+    EventController.prototype.joinRides = function (req, res) {
+        var _id = req.params._id;
+        var rideId = req.body.rideId;
+        Event_1.default.findOneAndUpdate({ "_id": _id, "rides._id": rideId }, {
+            "$push": {
+                "rides.$.peopleJoined": {
+                    "userId": req.body.userId,
+                    "rideId": req.body.rideId
                 }
             }
         })
@@ -95,11 +113,12 @@ var EventController = /** @class */ (function () {
     //   }
     // set up our routes
     EventController.prototype.routes = function () {
-        this.router.get('/', this.all);
-        this.router.get('/:_id', this.one);
+        this.router.get('/', this.allEvents);
+        this.router.get('/:_id', this.oneEvent);
         this.router.get('/rides/:_id', this.allRides);
-        this.router.post('/', this.create);
-        this.router.put('/:_id', this.update);
+        this.router.post('/', this.createEvent);
+        this.router.put('/:_id', this.updateRides);
+        this.router.put('/rides/:_id', this.joinRides);
         // this.router.delete('/:username', this.delete);
     };
     return EventController;
