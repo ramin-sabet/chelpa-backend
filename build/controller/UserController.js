@@ -18,16 +18,15 @@ var UserController = /** @class */ (function () {
             var userId = req.body.userId;
             var userName = req.body.userName;
             var phoneNumber = req.body.phoneNumber;
-            var image = {
-                filename: req.file.filename,
-                originalName: req.file.originalname,
-                desc: req.body.desc
-            };
+            // const image = {
+            //     filename: req.file.filename,
+            //     originalName: req.file.originalname,
+            //     desc: req.body.desc
+            // };
             var user = new User_1.default({
                 userId: userId,
                 userName: userName,
                 phoneNumber: phoneNumber,
-                image: image
             });
             user.save()
                 .then(function (data) {
@@ -38,9 +37,20 @@ var UserController = /** @class */ (function () {
             });
         });
     };
+    UserController.prototype.one = function (req, res) {
+        var userId = req.params._id;
+        User_1.default.findOne({ userId: userId })
+            .then(function (data) {
+            res.status(200).json({ data: data });
+        })
+            .catch(function (error) {
+            res.status(500).json({ error: error });
+        });
+    };
     // set up our routes
     UserController.prototype.routes = function () {
         this.router.post('/', this.create);
+        this.router.get('/:_id', this.one);
     };
     return UserController;
 }());

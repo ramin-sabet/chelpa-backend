@@ -30,11 +30,11 @@ class UserController {
             const userId: string = req.body.userId;
             const userName: string = req.body.userName;
             const phoneNumber: Number = req.body.phoneNumber;
-            const image = {
-                filename: req.file.filename,
-                originalName: req.file.originalname,
-                desc: req.body.desc
-            };
+            // const image = {
+            //     filename: req.file.filename,
+            //     originalName: req.file.originalname,
+            //     desc: req.body.desc
+            // };
 
 
 
@@ -42,7 +42,7 @@ class UserController {
                 userId,
                 userName,
                 phoneNumber,
-                image
+                // image
 
 
             });
@@ -57,10 +57,22 @@ class UserController {
         })
 
     }
+    public one(req: Request, res: Response): void {
+        const userId: string = req.params._id;
+    
+        User.findOne({ userId })
+          .then((data) => {
+            res.status(200).json({ data });
+          })
+          .catch((error) => {
+            res.status(500).json({ error });
+          });
+      }
 
     // set up our routes
     public routes() {
         this.router.post('/', this.create);
+        this.router.get('/:_id', this.one);
     }
 
 }

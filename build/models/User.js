@@ -20,13 +20,14 @@ var UserSchema = new mongoose_1.Schema({
         type: String,
         default: '',
         required: true,
-    },
-    image: {
-        filename: String,
-        originalName: String,
-        dest: String,
-        created: { type: Date, default: Date.now }
     }
+    // },
+    // image: {
+    //     filename: String,
+    //     originalName: String,
+    //     dest: String,
+    //     created: { type: Date, default: Date.now }
+    // }
 });
 exports.default = mongoose_1.model('User', UserSchema);
 //# sourceMappingURL=User.js.map
