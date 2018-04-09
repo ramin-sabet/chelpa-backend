@@ -11,6 +11,7 @@ import * as path from 'path';
 import * as admin from 'firebase-admin';
 import UserController from './controller/UserController';
 import EventController from './controller/EventController';
+import TripController from './controller/TripController';
 import OptionsController from './controller/OptionsController';
 
 export let UPLOAD_PATH = "uploads";
@@ -118,6 +119,7 @@ class Server {
     this.app.use('/', router);
     this.app.use('/api/v1/options', OptionsController);
     this.app.use('/api/v1/events', EventController);
+    this.app.use('/api/v1/trips', TripController);
     this.app.use('/api/v1/users', UserController);
     //  this.app.use('/api/v1/riders', RiderController);
   }

@@ -12,6 +12,7 @@ var logger = require("morgan");
 var admin = require("firebase-admin");
 var UserController_1 = require("./controller/UserController");
 var EventController_1 = require("./controller/EventController");
+var TripController_1 = require("./controller/TripController");
 var OptionsController_1 = require("./controller/OptionsController");
 exports.UPLOAD_PATH = "uploads";
 var storage = multer.diskStorage({
@@ -97,6 +98,7 @@ var Server = /** @class */ (function () {
         this.app.use('/', router);
         this.app.use('/api/v1/options', OptionsController_1.default);
         this.app.use('/api/v1/events', EventController_1.default);
+        this.app.use('/api/v1/trips', TripController_1.default);
         this.app.use('/api/v1/users', UserController_1.default);
         //  this.app.use('/api/v1/riders', RiderController);
     };
