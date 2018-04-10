@@ -32,9 +32,20 @@ var TripController = /** @class */ (function () {
             res.status(500).json({ error: error });
         });
     };
+    TripController.prototype.getTrips = function (req, res) {
+        Trip_1.default.find({}, { lean: true })
+            .then(function (data) {
+            console.log(data);
+            res.status(200).json({ data: data });
+        })
+            .catch(function (error) {
+            res.status(500).json({ error: error });
+        });
+    };
     // set up our routes
     TripController.prototype.routes = function () {
         this.router.post('/', this.createTrip);
+        this.router.get('/', this.getTrips);
     };
     return TripController;
 }());

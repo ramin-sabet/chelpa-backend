@@ -57,22 +57,48 @@ class UserController {
         })
 
     }
+
+
     public one(req: Request, res: Response): void {
         const userId: string = req.params._id;
-    
+
         User.findOne({ userId })
-          .then((data) => {
-            res.status(200).json({ data });
-          })
-          .catch((error) => {
-            res.status(500).json({ error });
-          });
-      }
+            .then((data) => {
+                res.status(200).json({ data });
+            })
+            .catch((error) => {
+                res.status(500).json({ error });
+            });
+    }
+
+
+    public updateUser(req: Request, res: Response): void {
+        const userId: string = req.params._id;
+
+        User.findOneAndUpdate({ userId }, {
+            $set: {
+                maleFemale: req.body.maleFemale,
+                studyWork: req.body.studyWork,
+                study: req.body.study,
+                studyField: req.body.studyField,
+                work: req.body.work,
+                workField: req.body.workField,
+                interests: req.body.interests,
+            }
+        })
+            .then((data) => {
+                res.status(200).json({ data });
+            })
+            .catch((error) => {
+                res.status(500).json({ error });
+            });
+    }
 
     // set up our routes
     public routes() {
         this.router.post('/', this.create);
         this.router.get('/:_id', this.one);
+        this.router.put('/:_id', this.updateUser);
     }
 
 }

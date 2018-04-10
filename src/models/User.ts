@@ -18,12 +18,40 @@ const UserSchema: Schema = new Schema({
         // unique: true
     },
     phoneNumber: {
-        type: String,
+        type: Number,
         default: '',
         required: true,
         // unique: true
+    },
+    maleFemale: {
+        type: String,
+        default: ''
+    },
+    studyWork: {
+        type: String,
+        default: ''
+    },
+    study: {
+        type: String,
+        default: ''
+    },
+    studyField: {
+        type: String,
+        default: ''
+    },
+    work: {
+        type: String,
+        default: '',
+    },
+    workField: {
+        type: String,
+        default: ''
+    },
+    interests: {
+        type: String,
+        default: ''
     }
-        // },
+    // },
     // image: {
     //     filename: String,
     //     originalName: String,

@@ -47,10 +47,31 @@ var UserController = /** @class */ (function () {
             res.status(500).json({ error: error });
         });
     };
+    UserController.prototype.updateUser = function (req, res) {
+        var userId = req.params._id;
+        User_1.default.findOneAndUpdate({ userId: userId }, {
+            $set: {
+                maleFemale: req.body.maleFemale,
+                studyWork: req.body.studyWork,
+                study: req.body.study,
+                studyField: req.body.studyField,
+                work: req.body.work,
+                workField: req.body.workField,
+                interests: req.body.interests,
+            }
+        })
+            .then(function (data) {
+            res.status(200).json({ data: data });
+        })
+            .catch(function (error) {
+            res.status(500).json({ error: error });
+        });
+    };
     // set up our routes
     UserController.prototype.routes = function () {
         this.router.post('/', this.create);
         this.router.get('/:_id', this.one);
+        this.router.put('/:_id', this.updateUser);
     };
     return UserController;
 }());
