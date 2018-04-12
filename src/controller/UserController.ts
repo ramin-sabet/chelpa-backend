@@ -59,7 +59,7 @@ class UserController {
     }
 
 
-    public one(req: Request, res: Response): void {
+    public getUser(req: Request, res: Response): void {
         const userId: string = req.params._id;
 
         User.findOne({ userId })
@@ -97,7 +97,7 @@ class UserController {
     // set up our routes
     public routes() {
         this.router.post('/', this.create);
-        this.router.get('/:_id', this.one);
+        this.router.get('/:_id', this.getUser);
         this.router.put('/:_id', this.updateUser);
     }
 

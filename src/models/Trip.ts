@@ -21,7 +21,7 @@ const TripSchema: Schema = new Schema({
         required: true
     },
     time: {
-        type: String,
+        type: Date,
         default: '',
         required: true
     },

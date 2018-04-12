@@ -22,7 +22,7 @@ var TripSchema = new mongoose_1.Schema({
         required: true
     },
     time: {
-        type: String,
+        type: Date,
         default: '',
         required: true
     },

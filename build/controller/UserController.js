@@ -37,7 +37,7 @@ var UserController = /** @class */ (function () {
             });
         });
     };
-    UserController.prototype.one = function (req, res) {
+    UserController.prototype.getUser = function (req, res) {
         var userId = req.params._id;
         User_1.default.findOne({ userId: userId })
             .then(function (data) {
@@ -70,7 +70,7 @@ var UserController = /** @class */ (function () {
     // set up our routes
     UserController.prototype.routes = function () {
         this.router.post('/', this.create);
-        this.router.get('/:_id', this.one);
+        this.router.get('/:_id', this.getUser);
         this.router.put('/:_id', this.updateUser);
     };
     return UserController;

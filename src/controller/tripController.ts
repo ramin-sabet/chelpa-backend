@@ -1,9 +1,12 @@
 import { Request, Response, Router } from 'express';
 import Trip from '../models/Trip';
+import { text } from 'body-parser';
+import { ENETRESET } from 'constants';
 
 class TripController {
 
     public router: Router;
+
 
     constructor() {
         this.router = Router();
@@ -40,15 +43,49 @@ class TripController {
     }
     public getTrips(req: Request, res: Response): void {
 
-        Trip.find({},{lean:true})
-            .then((data) => {
-                console.log(data);
-                res.status(200).json({ data });
+        Trip.find({}, { from: 1, to: 1, time: 1, _id: 0 })
+            .then(async (data) => {
+                var request = require('request');
+                let timeFirst = data[0]['time'].getTime();
+                let fromFirst = data[0]['from'];
+                let modifiedTimes = [];
+                let modifiedFrom = [];
+                let modifiedFrom2;
+                for (let i = 1; i < data.length; i++) {
+                    if (Math.abs(timeFirst - data[i]['time'].getTime()) <= 3600000) {
+                        modifiedTimes.push(data[i]);
+                    }
+                }
+
+                for (let i = 0; i < modifiedTimes.length; i++) {
+                    // return new Promise(function (resolve, reject) {
+                        request(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${fromFirst}&destinations=${modifiedTimes[i].from}&key=AIzaSyCbshc9GyX5Fp4QGQRm0G4qn4J8YzHLlqw`, function (error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                if (parseInt(JSON.parse(body).rows[0].elements[0].distance.text) < 550) {
+                                    modifiedFrom.push(modifiedTimes[i]);
+                                    console.log(modifiedFrom);
+                                    // return modifiedFrom;
+                                }
+
+                            }
+
+                        })
+                    // })
+
+                }
+
+
+
+
+
+                // modifiedFrom2 = getModifiedFrom().then(res => console.log(res))
+                // console.log(modifiedFrom2);
+
+                res.status(200).json({ modifiedFrom });
             })
             .catch((error) => {
                 res.status(500).json({ error });
             });
-
     }
 
     // set up our routes
