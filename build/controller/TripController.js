@@ -69,39 +69,58 @@ var TripController = /** @class */ (function () {
     };
     TripController.prototype.getTrips = function (req, res) {
         var _this = this;
-        Trip_1.default.find({}, { from: 1, to: 1, time: 1, _id: 0 })
+        var _id = req.params._id;
+        var timeLimit = req.params.time;
+        var fromLimit = req.params.from;
+        var toLimit = req.params.to;
+        Trip_1.default.find()
             .then(function (data) { return __awaiter(_this, void 0, void 0, function () {
-            var request, timeFirst, fromFirst, modifiedTimes, modifiedFrom, modifiedFrom2, i, _loop_1, i;
+            var request, modifiedTimes, modifiedFrom, timeFirst, origins, returnedDistances, modifiedData, x, a, x, x;
             return __generator(this, function (_a) {
                 request = require('request');
-                timeFirst = data[0]['time'].getTime();
-                fromFirst = data[0]['from'];
                 modifiedTimes = [];
-                modifiedFrom = [];
-                for (i = 1; i < data.length; i++) {
-                    if (Math.abs(timeFirst - data[i]['time'].getTime()) <= 3600000) {
-                        modifiedTimes.push(data[i]);
+                modifiedFrom = '';
+                origins = '';
+                returnedDistances = [];
+                modifiedData = [];
+                for (x = 0; x < data.length; x++) {
+                    if (data[x]['_id'] == _id) {
+                        timeFirst = data[x]['time'].getTime();
+                        origins = data[x]['from'] + '|' + data[x]['to'];
                     }
                 }
-                _loop_1 = function (i) {
-                    // return new Promise(function (resolve, reject) {
-                    request("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + fromFirst + "&destinations=" + modifiedTimes[i].from + "&key=AIzaSyCbshc9GyX5Fp4QGQRm0G4qn4J8YzHLlqw", function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            if (parseInt(JSON.parse(body).rows[0].elements[0].distance.text) < 550) {
-                                modifiedFrom.push(modifiedTimes[i]);
-                                console.log(modifiedFrom);
-                                // return modifiedFrom;
+                for (a = 0; a < data.length; a++) {
+                    if (Math.abs(timeFirst - data[a]['time'].getTime()) <= (timeLimit * 3600000)) {
+                        modifiedTimes.push(data[a]);
+                    }
+                }
+                for (x = 0; x < modifiedTimes.length; x++) {
+                    modifiedFrom += modifiedTimes[x]['from'].toString();
+                    modifiedFrom += '|';
+                }
+                for (x = 0; x < modifiedTimes.length; x++) {
+                    modifiedFrom += modifiedTimes[x]['to'].toString();
+                    modifiedFrom += '|';
+                }
+                if (modifiedTimes.length > 0) {
+                    request("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + origins + "&destinations=" + modifiedFrom + "&key=AIzaSyCbshc9GyX5Fp4QGQRm0G4qn4J8YzHLlqw", function (error, response, body) {
+                        for (var x = 0; x < (JSON.parse(body).rows[0].elements.length / 2); x++) {
+                            if ((parseInt(JSON.parse(body).rows[0].elements[x].distance.text)) <= fromLimit) {
+                                if ((parseInt(JSON.parse(body).rows[1].elements[x + (JSON.parse(body).rows[0].elements.length / 2)].distance.text)) <= toLimit) {
+                                    if (data[x]._id != _id) {
+                                        modifiedData.push(data[x]);
+                                        if (x = (JSON.parse(body).rows[0].elements.length / 2) - 1) {
+                                            res.status(200).json({ modifiedData: modifiedData });
+                                        }
+                                    }
+                                }
                             }
                         }
                     });
-                    // })
-                };
-                for (i = 0; i < modifiedTimes.length; i++) {
-                    _loop_1(i);
                 }
-                // modifiedFrom2 = getModifiedFrom().then(res => console.log(res))
-                // console.log(modifiedFrom2);
-                res.status(200).json({ modifiedFrom: modifiedFrom });
+                else {
+                    res.status(200).json("No Data exists");
+                }
                 return [2 /*return*/];
             });
         }); })
@@ -112,7 +131,7 @@ var TripController = /** @class */ (function () {
     // set up our routes
     TripController.prototype.routes = function () {
         this.router.post('/', this.createTrip);
-        this.router.get('/', this.getTrips);
+        this.router.get('/:_id/:time/:from/:to', this.getTrips);
     };
     return TripController;
 }());

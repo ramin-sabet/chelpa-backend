@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import Trip from '../models/Trip';
 import { text } from 'body-parser';
-import { ENETRESET } from 'constants';
+
 
 class TripController {
 
@@ -43,45 +43,62 @@ class TripController {
     }
     public getTrips(req: Request, res: Response): void {
 
-        Trip.find({}, { from: 1, to: 1, time: 1, _id: 0 })
+        const _id: string = req.params._id;
+        const timeLimit: number = req.params.time;
+        const fromLimit: number = req.params.from;
+        const toLimit: number = req.params.to;
+
+        Trip.find()
             .then(async (data) => {
                 var request = require('request');
-                let timeFirst = data[0]['time'].getTime();
-                let fromFirst = data[0]['from'];
                 let modifiedTimes = [];
-                let modifiedFrom = [];
-                let modifiedFrom2;
-                for (let i = 1; i < data.length; i++) {
-                    if (Math.abs(timeFirst - data[i]['time'].getTime()) <= 3600000) {
-                        modifiedTimes.push(data[i]);
+                let modifiedFrom = '';
+                let timeFirst: any;
+                let origins = '';
+                let returnedDistances = [];
+                let modifiedData = [];
+
+                for (let x = 0; x < data.length; x++) {
+                    if (data[x]['_id'] == _id) {
+                        timeFirst = data[x]['time'].getTime();
+                        origins = data[x]['from'] + '|' + data[x]['to'];
                     }
                 }
 
-                for (let i = 0; i < modifiedTimes.length; i++) {
-                    // return new Promise(function (resolve, reject) {
-                        request(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${fromFirst}&destinations=${modifiedTimes[i].from}&key=AIzaSyCbshc9GyX5Fp4QGQRm0G4qn4J8YzHLlqw`, function (error, response, body) {
-                            if (!error && response.statusCode == 200) {
-                                if (parseInt(JSON.parse(body).rows[0].elements[0].distance.text) < 550) {
-                                    modifiedFrom.push(modifiedTimes[i]);
-                                    console.log(modifiedFrom);
-                                    // return modifiedFrom;
-                                }
+                for (let a = 0; a < data.length; a++) {
 
-                            }
-
-                        })
-                    // })
-
+                    if (Math.abs(timeFirst - data[a]['time'].getTime()) <= (timeLimit * 3600000)) {
+                        modifiedTimes.push(data[a]);
+                    }
                 }
 
+                for (let x = 0; x < modifiedTimes.length; x++) {
+                    modifiedFrom += modifiedTimes[x]['from'].toString();
+                    modifiedFrom += '|';
+                }
 
+                for (let x = 0; x < modifiedTimes.length; x++) {
+                    modifiedFrom += modifiedTimes[x]['to'].toString();
+                    modifiedFrom += '|';
+                }
 
-
-
-                // modifiedFrom2 = getModifiedFrom().then(res => console.log(res))
-                // console.log(modifiedFrom2);
-
-                res.status(200).json({ modifiedFrom });
+                if (modifiedTimes.length > 0) {
+                    request(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origins}&destinations=${modifiedFrom}&key=AIzaSyCbshc9GyX5Fp4QGQRm0G4qn4J8YzHLlqw`, function (error, response, body) {
+                        for (let x = 0; x < (JSON.parse(body).rows[0].elements.length / 2); x++) {
+                            if ((parseInt(JSON.parse(body).rows[0].elements[x].distance.text)) <= fromLimit) {
+                                if ((parseInt(JSON.parse(body).rows[1].elements[x + (JSON.parse(body).rows[0].elements.length / 2)].distance.text)) <= toLimit) {
+                                    if (data[x]._id != _id) {
+                                        modifiedData.push(data[x]); if (x = (JSON.parse(body).rows[0].elements.length / 2) - 1) {
+                                            res.status(200).json({ modifiedData });
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
+                } else {
+                    res.status(200).json("No Data exists");
+                }
             })
             .catch((error) => {
                 res.status(500).json({ error });
@@ -91,7 +108,7 @@ class TripController {
     // set up our routes
     public routes() {
         this.router.post('/', this.createTrip);
-        this.router.get('/', this.getTrips);
+        this.router.get('/:_id/:time/:from/:to', this.getTrips);
     }
 
 }
