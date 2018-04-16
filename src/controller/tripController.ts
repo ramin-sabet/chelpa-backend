@@ -88,7 +88,8 @@ class TripController {
                             if ((parseInt(JSON.parse(body).rows[0].elements[x].distance.text)) <= fromLimit) {
                                 if ((parseInt(JSON.parse(body).rows[1].elements[x + (JSON.parse(body).rows[0].elements.length / 2)].distance.text)) <= toLimit) {
                                     if (data[x]._id != _id) {
-                                        modifiedData.push(data[x]); if (x = (JSON.parse(body).rows[0].elements.length / 2) - 1) {
+                                        modifiedData.push(data[x]);
+                                        if (x == (JSON.parse(body).rows[0].elements.length / 2) - 1) {
                                             res.status(200).json({ modifiedData });
                                         }
                                     }

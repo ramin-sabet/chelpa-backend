@@ -104,12 +104,13 @@ var TripController = /** @class */ (function () {
                 }
                 if (modifiedTimes.length > 0) {
                     request("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + origins + "&destinations=" + modifiedFrom + "&key=AIzaSyCbshc9GyX5Fp4QGQRm0G4qn4J8YzHLlqw", function (error, response, body) {
+                        console.log(body);
                         for (var x = 0; x < (JSON.parse(body).rows[0].elements.length / 2); x++) {
                             if ((parseInt(JSON.parse(body).rows[0].elements[x].distance.text)) <= fromLimit) {
                                 if ((parseInt(JSON.parse(body).rows[1].elements[x + (JSON.parse(body).rows[0].elements.length / 2)].distance.text)) <= toLimit) {
                                     if (data[x]._id != _id) {
                                         modifiedData.push(data[x]);
-                                        if (x = (JSON.parse(body).rows[0].elements.length / 2) - 1) {
+                                        if (x == (JSON.parse(body).rows[0].elements.length / 2) - 1) {
                                             res.status(200).json({ modifiedData: modifiedData });
                                         }
                                     }
