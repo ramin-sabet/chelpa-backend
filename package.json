@@ -9,6 +9,7 @@
     "start": "tsc && node ./build/index.js"
   },
   "dependencies": {
+    "@types/socket.io": "^1.4.33",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
