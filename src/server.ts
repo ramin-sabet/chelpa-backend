@@ -14,6 +14,8 @@ import UserController from './controller/UserController';
 import EventController from './controller/EventController';
 import TripController from './controller/TripController';
 import OptionsController from './controller/OptionsController';
+import ConversationController from './controller/ConversationController';
+
 
 export let UPLOAD_PATH = "uploads";
 
@@ -123,7 +125,7 @@ class Server {
     this.app.use('/api/v1/events', EventController);
     this.app.use('/api/v1/trips', TripController);
     this.app.use('/api/v1/users', UserController);
-    //  this.app.use('/api/v1/riders', RiderController);
+    this.app.use('/api/v1/chats', ConversationController);
   }
 }
 

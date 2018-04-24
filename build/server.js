@@ -14,6 +14,7 @@ var UserController_1 = require("./controller/UserController");
 var EventController_1 = require("./controller/EventController");
 var TripController_1 = require("./controller/TripController");
 var OptionsController_1 = require("./controller/OptionsController");
+var ConversationController_1 = require("./controller/ConversationController");
 exports.UPLOAD_PATH = "uploads";
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -100,7 +101,7 @@ var Server = /** @class */ (function () {
         this.app.use('/api/v1/events', EventController_1.default);
         this.app.use('/api/v1/trips', TripController_1.default);
         this.app.use('/api/v1/users', UserController_1.default);
-        //  this.app.use('/api/v1/riders', RiderController);
+        this.app.use('/api/v1/chats', ConversationController_1.default);
     };
     return Server;
 }());
