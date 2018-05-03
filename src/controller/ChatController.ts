@@ -3,7 +3,7 @@ export default function SocketFunction(io) {
   io.on('connection', (socket) => {
 
     socket.on('join', function (data) {
-      //joining
+      //joining test
       socket.join(data.room);
 
       console.log(data.user + 'joined the room : ' + data.room);
