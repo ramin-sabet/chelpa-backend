@@ -1,55 +1,55 @@
-import { Request, Response, Router } from 'express';
-import Option from '../models/Option';
+// import { Request, Response, Router } from 'express';
+// import Option from '../models/Option';
 
-class OptionController {
+// class OptionController {
 
-  public router: Router;
+//   public router: Router;
 
-  constructor() {
-    this.router = Router();
-    this.routes();
-  }
+//   constructor() {
+//     this.router = Router();
+//     this.routes();
+//   }
 
-  public suggestedOptions(req: Request, res: Response): void {
+//   public suggestedOptions(req: Request, res: Response): void {
     
-    Option.find({ "name": { "$regex": req.query.keyword, "$options": "i" } },{name :1 ,_id:0}).limit(parseInt(req.query.limit))
-    .then((data) => {
-      res.status(200).json({ data });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
+//     Option.find({ "name": { "$regex": req.query.keyword, "$options": "i" } },{name :1 ,_id:0}).limit(parseInt(req.query.limit))
+//     .then((data) => {
+//       res.status(200).json({ data });
+//     })
+//     .catch((error) => {
+//       res.status(500).json({ error });
+//     });
   
-  }
+//   }
 
-  public create(req: Request, res: Response): void {
-    const name: string = req.body.name;
+//   public create(req: Request, res: Response): void {
+//     const name: string = req.body.name;
    
 
-    const option = new Option({
-      name
-    });
+//     const option = new Option({
+//       name
+//     });
 
-    option.save()
-    .then((data) => {
-      res.status(201).json({ data });
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
+//     option.save()
+//     .then((data) => {
+//       res.status(201).json({ data });
+//     })
+//     .catch((error) => {
+//       res.status(500).json({ error });
+//     });
 
-  }
-  public routes() {
-    this.router.get('/', this.suggestedOptions);
-    // this.router.get('/:username', this.one);
-    this.router.post('/', this.create);
-    // this.router.put('/:username', this.update);
-    // this.router.delete('/:username', this.delete);
-  }
+//   }
+//   public routes() {
+//     this.router.get('/', this.suggestedOptions);
+//     // this.router.get('/:username', this.one);
+//     this.router.post('/', this.create);
+//     // this.router.put('/:username', this.update);
+//     // this.router.delete('/:username', this.delete);
+//   }
 
-}
+// }
 
-const optionController = new OptionController();
-optionController.routes();
+// const optionController = new OptionController();
+// optionController.routes();
 
-export default optionController.router;
+// export default optionController.router;

@@ -11,9 +11,9 @@ var mongoose = require("mongoose");
 var logger = require("morgan");
 var admin = require("firebase-admin");
 var UserController_1 = require("./controller/UserController");
-var EventController_1 = require("./controller/EventController");
+// import EventController from './controller/EventController';
 var TripController_1 = require("./controller/TripController");
-var OptionsController_1 = require("./controller/OptionsController");
+// import OptionsController from './controller/OptionsController';
 var ConversationController_1 = require("./controller/ConversationController");
 exports.UPLOAD_PATH = "uploads";
 var storage = multer.diskStorage({
@@ -97,8 +97,8 @@ var Server = /** @class */ (function () {
         var router = express.Router();
         // this.app.use(validateFirebaseIdToken);
         this.app.use('/', router);
-        this.app.use('/api/v1/options', OptionsController_1.default);
-        this.app.use('/api/v1/events', EventController_1.default);
+        // this.app.use('/api/v1/options', OptionsController);
+        // this.app.use('/api/v1/events', EventController);
         this.app.use('/api/v1/trips', TripController_1.default);
         this.app.use('/api/v1/users', UserController_1.default);
         this.app.use('/api/v1/chats', ConversationController_1.default);

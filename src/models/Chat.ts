@@ -1,5 +1,4 @@
 import { model, Schema } from 'mongoose';
-import User from '../models/User';
 
 // tslint:disable object-literal-sort-keys
 const ChatSchema: Schema = new Schema({
@@ -7,18 +6,18 @@ const ChatSchema: Schema = new Schema({
         type: Date,
         default: Date.now
     },
-    conversationId: {
-        type: Schema.Types.ObjectId,
-        required: true
-    },
-    body: {
+    participant1: {
         type: String,
         required: true
     },
-    author: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }
+    participant2:{
+        type: String,
+        required: true
+    },
+    body: [{
+        type: String,
+        required: true
+    }]
 });
 
 export default model('Chat', ChatSchema);

@@ -13,12 +13,13 @@ Server.set('port', port);
 
 console.log(`Server listening on port ${port}`);
 
-const io = require('socket.io').listen(this.server);
 
-socketEvents(io);
+
 
 const server = http.createServer(Server);
+const io = require('socket.io').listen(server);
 server.listen(port);
+socketEvents(io);
 server.on('error', onError);
 server.on('listening', onListening);
 

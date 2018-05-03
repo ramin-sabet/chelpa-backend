@@ -8,10 +8,10 @@ debug('ts-express:server');
 var port = normalizePort(process.env.PORT || 3000);
 server_1.default.set('port', port);
 console.log("Server listening on port " + port);
-var io = require('socket.io').listen(this.server);
-ChatController_1.default(io);
 var server = http.createServer(server_1.default);
+var io = require('socket.io').listen(server);
 server.listen(port);
+ChatController_1.default(io);
 server.on('error', onError);
 server.on('listening', onListening);
 function normalizePort(val) {

@@ -7,18 +7,18 @@ var ChatSchema = new mongoose_1.Schema({
         type: Date,
         default: Date.now
     },
-    conversationId: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        required: true
-    },
-    body: {
+    participant1: {
         type: String,
         required: true
     },
-    author: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: 'User'
-    }
+    participant2: {
+        type: String,
+        required: true
+    },
+    body: [{
+            type: String,
+            required: true
+        }]
 });
 exports.default = mongoose_1.model('Chat', ChatSchema);
 //# sourceMappingURL=Chat.js.map
