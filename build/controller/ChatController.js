@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function SocketFunction(io) {
     io.on('connection', function (socket) {
         socket.on('join', function (data) {
-            //joining
+            //joining test
             socket.join(data.room);
             console.log(data.user + 'joined the room : ' + data.room);
             socket.broadcast.to(data.room).emit('new user joined', { user: data.user, message: 'has joined this room.' });

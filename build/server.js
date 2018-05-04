@@ -105,6 +105,6 @@ var Server = /** @class */ (function () {
     };
     return Server;
 }());
-// export
+// export test
 exports.default = new Server().app;
 //# sourceMappingURL=server.js.map
