@@ -73,7 +73,7 @@ var Server = /** @class */ (function () {
             urlOpenShift = process.env.OPENSHIFT_MONGODB_DB_URL +
                 process.env.OPENSHIFT_APP_NAME;
         }
-        mongoose.connect(urlOpenShift, function (err) {
+        mongoose.connect(MONGO_URI || urlOpenShift, function (err) {
             if (err) {
                 console.log(err);
             }
