@@ -93,7 +93,7 @@ class Server {
     if (process.env.OPENSHIFT_MONGO_URI) {
       console.log("HI");
       urlOpenShift = process.env.OPENSHIFT_MONGO_URI +
-      process.env.OPENSHIFT_ChelpaNode;
+      process.env.OPENSHIFT_chelpa;
   }
 
     mongoose.connect(MONGO_URI || urlOpenShift, (err) => {
