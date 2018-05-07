@@ -100,7 +100,7 @@ class Server {
     //     process.env.APP_NAME;
     // }
     console.log(urlOpenShift);
-    mongoose.connect(MONGO_URI || urlOpenShift, (err) => {
+    mongoose.connect(urlOpenShift, (err) => {
       if (err) {
         console.log(err);
       } else {
