@@ -94,7 +94,7 @@ class Server {
     console.log(process.env.MONGO_URI);
     console.log(process.env.APP_NAME);
     if (process.env.MONGO_URI) {
-      console.log("HI");
+      console.log("HII");
       urlOpenShift = process.env.MONGO_URI +
         process.env.APP_NAME;
     }
