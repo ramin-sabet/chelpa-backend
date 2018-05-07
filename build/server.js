@@ -77,6 +77,7 @@ var Server = /** @class */ (function () {
             urlOpenShift = process.env.MONGO_URI +
                 process.env.APP_NAME;
         }
+        console.log(urlOpenShift);
         mongoose.connect(MONGO_URI || urlOpenShift, function (err) {
             if (err) {
                 console.log(err);
