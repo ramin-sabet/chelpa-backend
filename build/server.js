@@ -66,15 +66,16 @@ var Server = /** @class */ (function () {
     }
     // application config
     Server.prototype.config = function () {
-        var urlOpenShift = '127.0.0.1:27017/' + process.env.OPENSHIFT_chelpa;
+        var urlOpenShift = '127.0.0.1:27017/' + process.env.APP_NAME;
         // const MONGO_URI: string = 'mongodb+srv://ramin_sabet:NmMnNmMn@gettingstarted-hgi96.mongodb.net/chalpa'
         // const MONGO_URI: string = 'mongodb://127.0.0.1:27017/chelpa';
         var MONGO_URI = 'mongodb://ramin_sabet:NmMnNmMn@gettingstarted-shard-00-00-hgi96.mongodb.net:27017,gettingstarted-shard-00-01-hgi96.mongodb.net:27017,gettingstarted-shard-00-02-hgi96.mongodb.net:27017/chelpa?ssl=true&replicaSet=GettingStarted-shard-0&authSource=admin';
-        console.log(process.env);
-        if (process.env.OPENSHIFT_MONGO_URI) {
+        console.log(process.env.MONGO_URI);
+        console.log(process.env.APP_NAME);
+        if (process.env.MONGO_URI) {
             console.log("HI");
-            urlOpenShift = process.env.OPENSHIFT_MONGO_URI +
-                process.env.OPENSHIFT_chelpa;
+            urlOpenShift = process.env.MONGO_URI +
+                process.env.APP_NAME;
         }
         mongoose.connect(MONGO_URI || urlOpenShift, function (err) {
             if (err) {
