@@ -5,7 +5,7 @@ var http = require("http");
 var server_1 = require("./server");
 var ChatController_1 = require("./controller/ChatController");
 debug('ts-express:server');
-var port = normalizePort(process.env.OPENSHIFT_NODEJS_PORT || 3000);
+var port = normalizePort(process.env.NODEJS_MONGO_PERSISTENT_PORT || 3000);
 server_1.default.set('port', port);
 console.log("Server listening on port " + port);
 var server = http.createServer(server_1.default);
