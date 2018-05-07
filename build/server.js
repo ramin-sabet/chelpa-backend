@@ -107,7 +107,9 @@ var Server = /** @class */ (function () {
     Server.prototype.routes = function () {
         var router = express.Router();
         // this.app.use(validateFirebaseIdToken);
-        this.app.use('/', router);
+        this.app.get('/', function (req, res) {
+            res.send("HEloo World");
+        });
         // this.app.use('/api/v1/options', OptionsController);
         // this.app.use('/api/v1/events', EventController);
         this.app.use('/api/v1/trips', TripController_1.default);

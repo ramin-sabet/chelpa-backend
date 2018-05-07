@@ -90,7 +90,7 @@ class Server {
     let urlOpenShift = '127.0.0.1:27017/' + process.env.APP_NAME;
     // const MONGO_URI: string = 'mongodb+srv://ramin_sabet:NmMnNmMn@gettingstarted-hgi96.mongodb.net/chalpa'
     // const MONGO_URI: string = 'mongodb://127.0.0.1:27017/chelpa';
-     const MONGO_URI: string = 'mongodb://ramin_sabet:NmMnNmMn@gettingstarted-shard-00-00-hgi96.mongodb.net:27017,gettingstarted-shard-00-01-hgi96.mongodb.net:27017,gettingstarted-shard-00-02-hgi96.mongodb.net:27017/chelpa?ssl=true&replicaSet=GettingStarted-shard-0&authSource=admin';
+    const MONGO_URI: string = 'mongodb://ramin_sabet:NmMnNmMn@gettingstarted-shard-00-00-hgi96.mongodb.net:27017,gettingstarted-shard-00-01-hgi96.mongodb.net:27017,gettingstarted-shard-00-02-hgi96.mongodb.net:27017/chelpa?ssl=true&replicaSet=GettingStarted-shard-0&authSource=admin';
     // console.log(process.env);
     console.log(process.env);
     // if (process.env.MONGO_URI) {
@@ -131,7 +131,9 @@ class Server {
   public routes(): void {
     const router: express.Router = express.Router();
     // this.app.use(validateFirebaseIdToken);
-    this.app.use('/', router);
+    this.app.get('/', function (req, res) {
+      res.send("HEloo World");
+    });
     // this.app.use('/api/v1/options', OptionsController);
     // this.app.use('/api/v1/events', EventController);
     this.app.use('/api/v1/trips', TripController);
