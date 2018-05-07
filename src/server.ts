@@ -134,6 +134,9 @@ class Server {
     this.app.get('/', function (req, res) {
       res.send("HEloo World");
     });
+    this.app.get('/pagecount', function (req, res) {
+      res.send("HEccccd");
+    });
     // this.app.use('/api/v1/options', OptionsController);
     // this.app.use('/api/v1/events', EventController);
     this.app.use('/api/v1/trips', TripController);
