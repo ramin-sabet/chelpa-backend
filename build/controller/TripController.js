@@ -90,7 +90,7 @@ var TripController = /** @class */ (function () {
                     }
                 }
                 for (a = 0; a < data.length; a++) {
-                    if (Math.abs(timeFirst - data[a]['time'].getTime()) <= (timeLimit * 3600000)) {
+                    if (Math.abs(timeFirst - data[a]['time'].getTime()) <= (timeLimit * 60000)) {
                         modifiedTimes.push(data[a]);
                     }
                 }
