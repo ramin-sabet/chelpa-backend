@@ -8,7 +8,7 @@ debug('ts-express:server');
 
 
 
-const port = normalizePort(process.env.NODEJS_MONGO_PERSISTENT_SERVICE_PORT || 3000);
+const port = normalizePort(process.env.CHELPA_PORT_8080_TCP_PORT || 3000);
 Server.set('port', port);
 
 console.log(`Server listening on port ${port}`);
