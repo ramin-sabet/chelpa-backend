@@ -89,7 +89,7 @@ class Server {
 
     // let urlOpenShift = process.env.MONGODB_PORT_27017_TCP_ADDR + '/' + process.env.MONGODB_SERVICE_PORT;
     //  const MONGO_URI: string = 'mongodb+srv://ramin_sabet:NmMnNmMn@gettingstarted-hgi96.mongodb.net/chalpa'
-      const MONGO_URI: string = 'mongodb://http://nodejs-mongo-persistent-chelpa.193b.starter-ca-central-1.openshiftapps.com:27017/chelpa';
+    const MONGO_URI: string = 'mongodb://72.30.6.118:27017/chelpa';
     // const MONGO_URI: string = 'mongodb://ramin_sabet:NmMnNmMn@gettingstarted-shard-00-00-hgi96.mongodb.net:27017,gettingstarted-shard-00-01-hgi96.mongodb.net:27017,gettingstarted-shard-00-02-hgi96.mongodb.net:27017/chelpa?ssl=true&replicaSet=GettingStarted-shard-0&authSource=admin';
     // // console.log(process.env);
     console.log(process.env);
@@ -105,25 +105,25 @@ class Server {
     //   urlOpenShift = process.env.MONGO_URI +
     //     process.env.APP_NAME;
     // }
-    var connect = function () {
-      mongoose.connect(MONGO_URI);
-    };
-    connect();
+    // var connect = function () {
+    //   mongoose.connect(MONGO_URI);
+    // };
+    // connect();
 
-    var db = mongoose.connection;
+    // var db = mongoose.connection;
 
-    db.on('error', function (error) {
-      console.log("Error loading the db - " + error);
-    });
-
-    db.on('disconnected', connect);
-    // mongoose.connect(MONGO_URI, (err) => {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     console.log('Connected to MongoDB');
-    //   }
+    // db.on('error', function (error) {
+    //   console.log("Error loading the db - " + error);
     // });
+
+    // db.on('disconnected', connect);
+    mongoose.connect(MONGO_URI, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Connected to MongoDB');
+      }
+    });
 
     // express middleware
     this.app.use(bodyParser.urlencoded({ extended: true }));
