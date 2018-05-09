@@ -67,8 +67,8 @@ var Server = /** @class */ (function () {
     // application config
     Server.prototype.config = function () {
         // let urlOpenShift = process.env.MONGODB_PORT_27017_TCP_ADDR + '/' + process.env.MONGODB_SERVICE_PORT;
-        var MONGO_URI = 'mongodb+srv://ramin_sabet:NmMnNmMn@gettingstarted-hgi96.mongodb.net/chalpa';
-        //  const MONGO_URI: string = 'mongodb://172.30.26.221:27017/chelpa';
+        //  const MONGO_URI: string = 'mongodb+srv://ramin_sabet:NmMnNmMn@gettingstarted-hgi96.mongodb.net/chalpa'
+        var MONGO_URI = 'mongodb://http://nodejs-mongo-persistent-chelpa.193b.starter-ca-central-1.openshiftapps.com:27017/chelpa';
         // const MONGO_URI: string = 'mongodb://ramin_sabet:NmMnNmMn@gettingstarted-shard-00-00-hgi96.mongodb.net:27017,gettingstarted-shard-00-01-hgi96.mongodb.net:27017,gettingstarted-shard-00-02-hgi96.mongodb.net:27017/chelpa?ssl=true&replicaSet=GettingStarted-shard-0&authSource=admin';
         // // console.log(process.env);
         console.log(process.env);
