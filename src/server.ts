@@ -87,26 +87,43 @@ class Server {
   // application config
   public config(): void {
 
-    let urlOpenShift = process.env.MONGODB_PORT_27017_TCP_ADDR + '/' + process.env.MONGODB_SERVICE_PORT;
-    const MONGO_URI: string = 'mongodb+srv://ramin_sabet:NmMnNmMn@gettingstarted-hgi96.mongodb.net/chalpa'
+    // let urlOpenShift = process.env.MONGODB_PORT_27017_TCP_ADDR + '/' + process.env.MONGODB_SERVICE_PORT;
+    // const MONGO_URI: string = 'mongodb+srv://ramin_sabet:NmMnNmMn@gettingstarted-hgi96.mongodb.net/chalpa'
     // const MONGO_URI: string = 'mongodb://127.0.0.1:27017/chelpa';
     // const MONGO_URI: string = 'mongodb://ramin_sabet:NmMnNmMn@gettingstarted-shard-00-00-hgi96.mongodb.net:27017,gettingstarted-shard-00-01-hgi96.mongodb.net:27017,gettingstarted-shard-00-02-hgi96.mongodb.net:27017/chelpa?ssl=true&replicaSet=GettingStarted-shard-0&authSource=admin';
-    // console.log(process.env);
+    // // console.log(process.env);
     console.log(process.env);
-    console.log(urlOpenShift);
+    var url = '127.0.0.1:27017/' + process.env.OPENSHIFT_APP_NAME;
+
+    // if OPENSHIFT env variables are present, use the available connection info:
+    if (process.env.OPENSHIFT_MONGODB_DB_URL) {
+      url = process.env.OPENSHIFT_MONGODB_DB_URL +
+        process.env.OPENSHIFT_APP_NAME;
+    }
     // if (process.env.MONGO_URI) {
     //   console.log("HII");
     //   urlOpenShift = process.env.MONGO_URI +
     //     process.env.APP_NAME;
     // }
-    console.log(urlOpenShift);
-    mongoose.connect(urlOpenShift, (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Connected to MongoDB');
-      }
+    var connect = function () {
+      mongoose.connect(url);
+    };
+    connect();
+
+    var db = mongoose.connection;
+
+    db.on('error', function (error) {
+      console.log("Error loading the db - " + error);
     });
+
+    db.on('disconnected', connect);
+    // mongoose.connect(MONGO_URI, (err) => {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     console.log('Connected to MongoDB');
+    //   }
+    // });
 
     // express middleware
     this.app.use(bodyParser.urlencoded({ extended: true }));
