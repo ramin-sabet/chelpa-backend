@@ -11,9 +11,7 @@ import * as path from 'path';
 import * as admin from 'firebase-admin';
 import * as socketIo from 'socket.io';
 import UserController from './controller/UserController';
-// import EventController from './controller/EventController';
 import TripController from './controller/TripController';
-// import OptionsController from './controller/OptionsController';
 import ConversationController from './controller/ConversationController';
 
 
@@ -87,37 +85,8 @@ class Server {
   // application config
   public config(): void {
 
-    // let urlOpenShift = process.env.MONGODB_PORT_27017_TCP_ADDR + '/' + process.env.MONGODB_SERVICE_PORT;
-    // const MONGO_URI: string = 'mongodb+srv://ramin_sabet:NmMnNmMn@gettingstarted-hgi96.mongodb.net/chalpa'
-    //   ("mongodb://user:password@[IP adresss]:[port]/[databaseName]", { auth: { authdb: "admin" } }, () => { })
-    // const MONGO_URI: string = 'mongodb://72.30.6.118:27017/chelpa';
     const MONGO_URI: string = 'mongodb://ramin_sabet:NmMnNmMn@gettingstarted-shard-00-00-hgi96.mongodb.net:27017,gettingstarted-shard-00-01-hgi96.mongodb.net:27017,gettingstarted-shard-00-02-hgi96.mongodb.net:27017/chelpa?ssl=true&replicaSet=GettingStarted-shard-0&authSource=admin';
-    // // console.log(process.env);
-    console.log(process.env);
-    // var url = 'mongodb://127.0.0.1:27017/' + process.env.OPENSHIFT_APP_NAME;
 
-    // if OPENSHIFT env variables are present, use the available connection info:
-    // if (process.env.OPENSHIFT_MONGODB_DB_URL) {
-    //   url = process.env.OPENSHIFT_MONGODB_DB_URL +
-    //     process.env.OPENSHIFT_APP_NAME;
-    // }
-    // if (process.env.MONGO_URI) {
-    //   console.log("HII");
-    //   urlOpenShift = process.env.MONGO_URI +
-    //     process.env.APP_NAME;
-    // }
-    // var connect = function () {
-    //   mongoose.connect(MONGO_URI);
-    // };
-    // connect();
-
-    // var db = mongoose.connection;
-
-    // db.on('error', function (error) {
-    //   console.log("Error loading the db - " + error);
-    // });
-
-    // db.on('disconnected', connect);
     mongoose.connect(MONGO_URI, (err) => {
       if (err) {
         console.log(err);
@@ -151,10 +120,7 @@ class Server {
     const router: express.Router = express.Router();
     // this.app.use(validateFirebaseIdToken);
     this.app.get('/', function (req, res) {
-      res.send("HEloo World");
-    });
-    this.app.get('/pagecount', function (req, res) {
-      res.send("HEccccd");
+      res.send("Success");
     });
     // this.app.use('/api/v1/options', OptionsController);
     // this.app.use('/api/v1/events', EventController);
